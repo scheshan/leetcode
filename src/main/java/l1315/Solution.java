@@ -2,9 +2,6 @@ package l1315;
 
 import shared.TreeNode;
 
-import java.util.LinkedList;
-import java.util.Queue;
-
 /**
  * Solution
  *
@@ -14,52 +11,29 @@ import java.util.Queue;
 public class Solution {
 
     public int sumEvenGrandparent(TreeNode root) {
-        Queue<TreeNode> queue = new LinkedList<>();
-        Queue<TreeNode> spec = new LinkedList<>();
+        return sum(root, false, false);
+    }
 
-        addToQueue(queue, root);
-
-        int result = 0;
-
-        while ((!queue.isEmpty()) || (!spec.isEmpty())) {
-            Queue<TreeNode> q = queue;
-            Queue<TreeNode> s = spec;
-            queue = new LinkedList<>();
-            spec = new LinkedList<>();
-
-            for (TreeNode node : q) {
-                if (match(node)) {
-                    addToQueue(spec, node.left);
-                    addToQueue(spec, node.right);
-                } else {
-                    addToQueue(queue, node.left);
-                    addToQueue(queue, node.right);
-                }
-            }
-
-            for (TreeNode node : s) {
-                if (match(node)) {
-                    result += addToQueue(spec, node.left);
-                    result += addToQueue(spec, node.right);
-                } else {
-                    result += addToQueue(queue, node.left);
-                    result += addToQueue(queue, node.right);
-                }
-            }
+    private int sum(TreeNode root, boolean parent, boolean grand) {
+        if (root == null) {
+            return 0;
         }
-
-        return result;
+        int n = 0;
+        if (grand) {
+            n = root.val;
+        }
+        boolean m = match(root);
+        return sum(root.left, m, parent) + sum(root.right, m, parent) + n;
     }
 
     private boolean match(TreeNode node) {
-        return node != null && node.val % 2 == 0;
+        return node != null && (node.val & 1) != 1;
     }
 
-    private int addToQueue(Queue<TreeNode> queue, TreeNode node) {
-        if (node != null) {
-            queue.add(node);
-            return node.val;
-        }
-        return 0;
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(6);
+        root.left = new TreeNode(7);
+        root.right = new TreeNode(8);
+        new Solution().sumEvenGrandparent(root);
     }
 }
