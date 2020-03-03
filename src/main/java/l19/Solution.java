@@ -10,10 +10,13 @@ import shared.ListNode;
  */
 public class Solution {
 
-    public int kthToLast(ListNode head, int k) {
+    public ListNode removeNthFromEnd(ListNode head, int n) {
         ListNode low = head, fast = head;
 
-        for (int i = 0; i < k; i++) {
+        for (int i = 0; i <= n; i++) {
+            if (fast == null) {
+                return head.next;
+            }
             fast = fast.next;
         }
 
@@ -21,6 +24,15 @@ public class Solution {
             fast = fast.next;
             low = low.next;
         }
-        return low.val;
+
+        low.next = low.next.next;
+
+        return head;
+    }
+
+    public static void main(String[] args) {
+        ListNode head = new ListNode(1);
+
+        new Solution().removeNthFromEnd(head, 1);
     }
 }
