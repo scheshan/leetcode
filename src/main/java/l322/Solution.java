@@ -9,24 +9,24 @@ package l322;
 public class Solution {
 
     public int coinChange(int[] coins, int amount) {
-        return coinChange(0, coins, amount);
-    }
 
-    private int coinChange(int idxCoin, int[] coins, int amount) {
-        if (amount == 0)
-            return 0;
-        if (idxCoin < coins.length && amount > 0) {
-            int maxVal = amount / coins[idxCoin];
-            int minCost = Integer.MAX_VALUE;
-            for (int x = 0; x <= maxVal; x++) {
-                if (amount >= x * coins[idxCoin]) {
-                    int res = coinChange(idxCoin + 1, coins, amount - x * coins[idxCoin]);
-                    if (res != -1)
-                        minCost = Math.min(minCost, res + x);
+        int [] f = new int[amount + 1];
+        f[0] = 0;
+
+        for(int i = 1; i <= amount; i++){
+
+            int cost = Integer.MAX_VALUE;
+
+            for(int j = 0; j < coins.length; j++){
+                if(i - coins[j] >= 0){
+                    if(f[i-coins[j]] != Integer.MAX_VALUE)
+                        cost = Math.min(cost, f[i - coins[j]] + 1);
                 }
             }
-            return (minCost == Integer.MAX_VALUE)? -1: minCost;
+
+            f[i] = cost;
         }
-        return -1;
+
+        return  f[amount] == Integer.MAX_VALUE? -1 : f[amount];
     }
 }
