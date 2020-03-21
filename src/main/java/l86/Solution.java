@@ -15,42 +15,27 @@ public class Solution {
             return null;
         }
 
-        ListNode leftHead = null;
-        ListNode leftTail = null;
-        ListNode rightHead = null;
-        ListNode rightTail = null;
+        ListNode leftHead = new ListNode(0);
+        ListNode leftTail = leftHead;
+
+        ListNode rightHead = new ListNode(0);
+        ListNode rightTail = rightHead;
 
         while (head != null) {
             if (head.val < x) {
-                if (leftHead == null) {
-                    leftHead = head;
-                    leftTail = head;
-                } else {
-                    leftTail.next = head;
-                    leftTail = head;
-                }
+                leftTail.next = head;
+                leftTail = head;
             } else {
-                if (rightHead == null) {
-                    rightHead = head;
-                    rightTail = head;
-                } else {
-                    rightTail.next = head;
-                    rightTail = head;
-                }
+                rightTail.next = head;
+                rightTail = head;
             }
 
             head = head.next;
         }
 
-        if (leftHead == null) {
-            leftHead = rightHead;
-        } else {
-            leftTail.next = rightHead;
-        }
-        if (rightTail != null) {
-            rightTail.next = null;
-        }
+        leftTail.next = rightHead.next;
+        rightTail.next = null;
 
-        return leftHead;
+        return leftHead.next;
     }
 }
