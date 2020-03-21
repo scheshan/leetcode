@@ -10,60 +10,82 @@ import java.util.*;
  */
 public class Solution {
 
+    private class Tuple {
+        int x;
+
+        int y;
+
+        public Tuple(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Tuple tuple = (Tuple) o;
+            return x == tuple.x &&
+                    y == tuple.y;
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(x, y);
+        }
+    }
+
     public boolean canMeasureWater(int x, int y, int z) {
-        if (z == 0) {
-            return true;
-        }
-        if (x + y < z) {
-            return false;
-        }
-        Queue<Map.Entry<Integer, Integer>> queue = new ArrayDeque<>();
-        AbstractMap.SimpleEntry<Integer, Integer> start = new AbstractMap.SimpleEntry<>(0, 0);
-        queue.add(start);
-        Set<Map.Entry<Integer, Integer>> visited = new HashSet<>();
-        visited.add(start);
+        Set<Tuple> set = new HashSet<>();
+
+        Queue<Tuple> queue = new LinkedList<>();
+        addQueue(queue, set, new Tuple(0, 0));
         while (!queue.isEmpty()) {
-            Map.Entry<Integer, Integer> entry = queue.poll();
-            int curX = entry.getKey();
-            int curY = entry.getValue();
-            if (curX == z || curY == z || curX + curY == z) {
+            Tuple t = queue.remove();
+
+            if (t.x == z || t.y == z || t.x + t.y == z) {
                 return true;
             }
-            if (curX == 0) {
-                // 把第一个桶填满
-                addIntoQueue(queue, visited, new AbstractMap.SimpleEntry<>(x, curY));
-            }
-            if (curY == 0) {
-                // 把第二个桶填满
-                addIntoQueue(queue, visited, new AbstractMap.SimpleEntry<>(curX, y));
-            }
-            if (curY < y) {
-                // 把第一个桶倒空
-                addIntoQueue(queue, visited, new AbstractMap.SimpleEntry<>(0, curY));
-            }
-            if (curX < x) {
-                // 把第二个桶倒空
-                addIntoQueue(queue, visited, new AbstractMap.SimpleEntry<>(curX, 0));
+
+            if (t.x == 0 && t.y == 0) {
+                addQueue(queue, set, new Tuple(0, y));
+                addQueue(queue, set, new Tuple(x, 0));
+                addQueue(queue, set, new Tuple(x, y));
+                continue;
             }
 
-            // y - curY是第二个桶还可以再加的水的升数，但是最多只能加curX升水。
-            int moveSize = Math.min(curX, y - curY);
-            // 把第一个桶里的curX升水倒到第二个桶里去。
-            addIntoQueue(queue, visited, new AbstractMap.SimpleEntry<>(curX - moveSize, curY + moveSize));
-            // 反过来同理，x - curX是第一个桶还可以再加的升数，但是最多只能加curY升水。
-            moveSize = Math.min(curY, x - curX);
-            // 把第一个桶里的curX升水倒到第二个桶里去。
-            addIntoQueue(queue, visited, new AbstractMap.SimpleEntry<>(curX + moveSize, curY - moveSize));
+            //倒左边
+            if (t.x > 0) {
+                //清空
+                addQueue(queue, set, new Tuple(0, t.y));
+
+                //倒右边
+                int right = Math.min(t.x + t.y, y);
+                addQueue(queue, set, new Tuple(t.x + t.y - right, right));
+            } else {
+                addQueue(queue, set, new Tuple(x, t.y));
+            }
+
+            //倒右边
+            if (t.y > 0) {
+                //清空
+                addQueue(queue, set, new Tuple(t.x, 0));
+
+                //倒左边
+                int left = Math.min(t.x + t.y, x);
+                addQueue(queue, set, new Tuple(left, t.x + t.y - left));
+            } else {
+                addQueue(queue, set, new Tuple(t.x, y));
+            }
         }
+
         return false;
     }
 
-    private void addIntoQueue(Queue<Map.Entry<Integer, Integer>> queue,
-                              Set<Map.Entry<Integer, Integer>> visited,
-                              Map.Entry<Integer, Integer> newEntry) {
-        if (!visited.contains(newEntry)) {
-            visited.add(newEntry);
-            queue.add(newEntry);
+    private void addQueue(Queue<Tuple> queue, Set<Tuple> set, Tuple tuple) {
+        if (!set.contains(tuple)) {
+            queue.add(tuple);
+            set.add(tuple);
         }
     }
 }
