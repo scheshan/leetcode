@@ -15,62 +15,28 @@ public class Solution {
             return null;
         }
 
-        ListNode leftHead = null;
-        ListNode leftTail = null;
-        ListNode rightHead = null;
-        ListNode rightTail = null;
-        ListNode xHead = null;
-        ListNode xTail = null;
+        ListNode leftHead = new ListNode(0);
+        ListNode leftTail = leftHead;
+
+        ListNode rightHead = new ListNode(0);
+        ListNode rightTail = rightHead;
 
         while (head != null) {
             if (head.val < x) {
-                if (leftHead == null) {
-                    leftHead = head;
-                    leftTail = head;
-                } else {
-                    leftTail.next = head;
-                    leftTail = head;
-                }
-            } else if (head.val > x) {
-                if (rightHead == null) {
-                    rightHead = head;
-                    rightTail = head;
-                } else {
-                    rightTail.next = head;
-                    rightTail = head;
-                }
+                leftTail.next = head;
+                leftTail = head;
             } else {
-                if (xHead == null) {
-                    xHead = head;
-                    xTail = head;
-                } else {
-                    xTail.next = head;
-                    xTail = head;
-                }
+                rightTail.next = head;
+                rightTail = head;
             }
 
             head = head.next;
         }
 
-        if (leftHead == null) {
-            leftHead = rightHead;
-            leftTail = rightTail;
-        } else {
-            leftTail.next = rightHead;
-            leftTail = rightTail != null ? rightTail : leftTail;
-        }
+        leftTail.next = rightHead.next;
+        rightTail.next = null;
 
-        if (leftHead == null) {
-            leftHead = xHead;
-        } else {
-            leftTail.next = xHead;
-        }
-
-        if (xTail != null) {
-            xTail.next = null;
-        }
-
-        return leftHead;
+        return leftHead.next;
     }
 
     public static void main(String[] args) {
