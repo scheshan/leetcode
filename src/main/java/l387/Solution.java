@@ -1,8 +1,5 @@
 package l387;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Solution
  *
@@ -12,18 +9,13 @@ import java.util.Map;
 public class Solution {
 
     public int firstUniqChar(String s) {
-        Map<Character, Integer> map = new HashMap<>();
+        int[] arr = new int[26];
         for (int i = 0; i < s.length(); i++) {
-            map.compute(s.charAt(i), (k, v) -> {
-                if (v == null) {
-                    v = 0;
-                }
-                return ++v;
-            });
+            arr[s.charAt(i) - 'a']++;
         }
 
         for (int i = 0; i < s.length(); i++) {
-            if (map.get(s.charAt(i)) == 1) {
+            if (arr[s.charAt(i) - 'a'] == 1) {
                 return i;
             }
         }
