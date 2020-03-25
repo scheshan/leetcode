@@ -39,15 +39,15 @@ public class CustomStack {
             head.next = node.next;
             size--;
             return node.val;
+            }
         }
-    }
 
-    public void increment(int k, int val) {
-        Node node = head.next;
-        int i = 0;
+        public void increment(int k, int val) {
+            Node node = head.next;
+            int i = 0;
 
-        while (node != null) {
-            if (i >= size - k) {
+            while (node != null) {
+                if (i >= size - k) {
                 node.val += val;
             }
             node = node.next;
