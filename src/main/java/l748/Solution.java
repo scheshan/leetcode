@@ -1,8 +1,5 @@
 package l748;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Solution
  *
@@ -12,67 +9,38 @@ import java.util.Map;
 public class Solution {
 
     public String shortestCompletingWord(String licensePlate, String[] words) {
-        Map<Character, Integer> map = new HashMap<>();
-        for (int i = 0; i < licensePlate.length(); i++) {
-            char ch = lower(licensePlate.charAt(i));
-            add(map, ch);
-        }
+        int[] license = toArray(licensePlate);
 
         String res = null;
-
         for (String word : words) {
-            Map<Character, Integer> m = new HashMap<>();
-            for (int i = 0; i < word.length(); i++) {
-                char ch = lower(word.charAt(i));
-                if (map.containsKey(ch)) {
-                    add(m, ch);
+            if (match(license, toArray(word))) {
+                if (res == null || word.length() < res.length()) {
+                    res = word;
                 }
             }
-
-            if (map.size() == m.size()) {
-                boolean match = true;
-                for (Map.Entry<Character, Integer> entry : map.entrySet()) {
-                    if (!(m.containsKey(entry.getKey()) && m.get(entry.getKey()) >= entry.getValue())) {
-                        match = false;
-                        break;
-                    }
-                }
-                if (match) {
-                    if (res == null || res.length() > word.length()) {
-                        res = word;
-                    }
-                }
-            }
-
         }
-
 
         return res;
     }
 
-    private void add(Map<Character, Integer> map, char ch) {
-        if (ch >= 'a' && ch <= 'z') {
-
-        } else {
-            return;
-        }
-
-        map.compute(ch, (k, v) -> {
-            if (v == null) {
-                v = 0;
+    private boolean match(int[] license, int[] word) {
+        for (int i = 0; i < license.length; i++) {
+            if (license[i] > word[i]) {
+                return false;
             }
-            return ++v;
-        });
-    }
-
-    private char lower(char ch) {
-        if (ch >= 'A' && ch <= 'Z') {
-            ch |= ' ';
         }
-        return ch;
+        return true;
     }
 
-    public static void main(String[] args) {
-        new Solution().shortestCompletingWord("1s3 PSt", new String[]{"step", "steps", "stripe", "stepple"});
+    private int[] toArray(String word) {
+        int[] res = new int[26];
+        for (int i = 0; i < word.length(); i++) {
+            int c = Character.toLowerCase(word.charAt(i)) - 'a';
+            if (c >= 0 && c < 26) {
+                res[c]++;
+            }
+        }
+
+        return res;
     }
 }
