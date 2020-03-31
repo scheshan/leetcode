@@ -25,6 +25,17 @@ public class Solution {
             }
         }
 
-        return count > 0 ? major : -1;
+        if (count > 0) {
+            int valid = 0;
+            for (int num : nums) {
+                if (num == major) {
+                    valid++;
+                }
+            }
+
+            return valid > nums.length / 2 ? major : -1;
+        } else {
+            return -1;
+        }
     }
 }
