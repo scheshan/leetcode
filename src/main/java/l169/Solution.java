@@ -1,7 +1,5 @@
 package l169;
 
-import java.util.Arrays;
-
 /**
  * Solution
  *
@@ -11,8 +9,22 @@ import java.util.Arrays;
 public class Solution {
 
     public int majorityElement(int[] nums) {
-        Arrays.sort(nums);
+        int major = 0;
+        int count = 0;
 
-        return nums[nums.length / 2];
+        for (int i = 0; i < nums.length; i++) {
+            if (count == 0) {
+                major = nums[i];
+                count++;
+            } else {
+                if (nums[i] != major) {
+                    count--;
+                } else {
+                    count++;
+                }
+            }
+        }
+
+        return major;
     }
 }
