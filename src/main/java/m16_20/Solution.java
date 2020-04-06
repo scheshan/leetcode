@@ -12,15 +12,14 @@ import java.util.List;
 public class Solution {
 
     public List<String> getValidT9Words(String num, String[] words) {
+        char[] map = {'2','2','2','3','3','3','4','4','4','5','5','5','6','6','6','7','7','7','7','8','8','8','9','9','9','9'};
         List<String> res = new LinkedList<>();
-
-        int[][] map = buildMap();
 
         for (String word : words) {
             word = word.toLowerCase();
             boolean valid = true;
             for (int i = 0; i < word.length(); i++) {
-                if (map[num.charAt(i) - '0'][word.charAt(i) - 'a'] == 0) {
+                if (map[word.charAt(i) - 'a'] != num.charAt(i)) {
                     valid = false;
                     break;
                 }
@@ -31,37 +30,5 @@ public class Solution {
         }
 
         return res;
-    }
-
-    private int[][] buildMap() {
-        int[][] map = new int[10][26];
-        map[2][0] = 1;
-        map[2][1] = 1;
-        map[2][2] = 1;
-        map[3][3] = 1;
-        map[3][4] = 1;
-        map[3][5] = 1;
-        map[4][6] = 1;
-        map[4][7] = 1;
-        map[4][8] = 1;
-        map[5][9] = 1;
-        map[5][10] = 1;
-        map[5][11] = 1;
-        map[6][12] = 1;
-        map[6][13] = 1;
-        map[6][14] = 1;
-        map[7][15] = 1;
-        map[7][16] = 1;
-        map[7][17] = 1;
-        map[7][18] = 1;
-        map[8][19] = 1;
-        map[8][20] = 1;
-        map[8][21] = 1;
-        map[9][22] = 1;
-        map[9][23] = 1;
-        map[9][24] = 1;
-        map[9][25] = 1;
-
-        return map;
     }
 }
