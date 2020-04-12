@@ -1,7 +1,5 @@
 package l322;
 
-import java.util.*;
-
 /**
  * Solution
  *
@@ -11,30 +9,30 @@ import java.util.*;
 public class Solution {
 
     public int coinChange(int[] coins, int amount) {
-        int[] dp = new int[amount + 1];
-        Arrays.fill(dp, Integer.MAX_VALUE);
-        dp[0] = 0;
-        for (int i = 0; i < dp.length; i++) {
-            for (int coin : coins) {
-                if (dp[i] == Integer.MAX_VALUE) {
-                    continue;
-                }
-                int ind = i + coin;
-                if (ind < 0 || ind > amount) {
-                    continue;
-                }
-                if (dp[ind] == Integer.MAX_VALUE) {
-                    dp[ind] = dp[i] + 1;
-                } else {
-                    dp[ind] = Math.min(dp[ind], dp[i] + 1);
-                }
-            }
+        if (amount == 0) {
+            return 0;
         }
 
-        return dp[amount] == Integer.MAX_VALUE ? -1 : dp[amount];
+        int[] dp = new int[amount + 1];
+        for (int i = 1; i <= amount; i++) {
+            int d = Integer.MAX_VALUE;
+            for (int coin : coins) {
+                int j = i - coin;
+                if (j >= 0) {
+                    if (j == 0) {
+                        d = Math.min(d, 1);
+                    } else if (dp[j] > 0) {
+                        d = Math.min(d, dp[j] + 1);
+                    }
+                }
+            }
+            dp[i] = d == Integer.MAX_VALUE ? 0 : d;
+        }
+
+        return dp[amount] == 0 ? -1 : dp[amount];
     }
 
     public static void main(String[] args) {
-        new Solution().coinChange(new int[]{2}, 3);
+        new Solution().coinChange(new int[]{1}, 0);
     }
 }
