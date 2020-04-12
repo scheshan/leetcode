@@ -1,8 +1,5 @@
 package l416;
 
-import java.util.HashSet;
-import java.util.Set;
-
 /**
  * Solution
  *
@@ -21,26 +18,22 @@ public class Solution {
             return false;
         }
         total >>= 1;
-        Set<Integer> visited = new HashSet<>();
 
-        return dfs(nums, 0, total, visited);
-    }
+        boolean[] dp = new boolean[total + 1];
+        dp[0] = true;
 
-    private boolean dfs(int[] nums, int i, int total, Set<Integer> visited) {
-        if (total == 0) {
-            return true;
+        for (int num : nums) {
+            for (int j = total; j >= num; j--) {
+                if (dp[j - num]) {
+                    dp[j] = true;
+                }
+            }
         }
-        if (total < 0 || i >= nums.length) {
-            return false;
-        }
 
-        visited.add(total);
-
-        return (!visited.contains(total - nums[i]) && dfs(nums, i + 1, total - nums[i], visited))
-                || dfs(nums, i + 1, total, visited);
+        return dp[total];
     }
 
     public static void main(String[] args) {
-        System.out.println(new Solution().canPartition(new int[]{1, 1, 1, 1, 1, 1, 1, 1}));
+        System.out.println(new Solution().canPartition(new int[]{1, 5, 11, 5}));
     }
 }
