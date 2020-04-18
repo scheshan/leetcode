@@ -1,4 +1,4 @@
-package lcp_1;
+package lcp1;
 
 /**
  * Solution
