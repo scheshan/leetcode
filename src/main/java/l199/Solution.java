@@ -2,9 +2,9 @@ package l199;
 
 import shared.TreeNode;
 
-import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * Solution
@@ -15,31 +15,37 @@ import java.util.List;
 public class Solution {
 
     public List<Integer> rightSideView(TreeNode root) {
-        List<Integer> result = new LinkedList<>();
+        List<Integer> res = new LinkedList<>();
+
         if (root == null) {
-            return result;
+            return res;
         }
 
-        Deque<TreeNode> deque = new LinkedList<>();
-        deque.addLast(root);
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+        queue.add(null);
 
-        while (!deque.isEmpty()) {
-            Deque<TreeNode> list = deque;
-            deque = new LinkedList<>();
-
-            result.add(list.peekLast().val);
-            while (!list.isEmpty()) {
-                TreeNode node = list.removeFirst();
-
-                if (node.left != null) {
-                    deque.addLast(node.left);
+        boolean newLine = true;
+        while (!queue.isEmpty()) {
+            TreeNode node = queue.remove();
+            if (node != null) {
+                if (newLine) {
+                    res.add(node.val);
+                    newLine = false;
                 }
                 if (node.right != null) {
-                    deque.addLast(node.right);
+                    queue.add(node.right);
+                }
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+            } else {
+                newLine = true;
+                if (!queue.isEmpty()) {
+                    queue.add(null);
                 }
             }
         }
-
-        return result;
+        return res;
     }
 }
