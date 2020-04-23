@@ -14,11 +14,9 @@ public class Solution {
 
         int[] coins = new int[]{1, 5, 10, 25};
         for (int c : coins) {
-            for (int i = 0; i <= n; i++) {
-                if (i + c <= n) {
-                    dp[i + c] += dp[i];
-                    dp[i + c] %= 1000000007;
-                }
+            for (int i = c; i <= n; i++) {
+                dp[i] += dp[i - c];
+                dp[i] %= 1000000007;
             }
         }
 
