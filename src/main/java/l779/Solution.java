@@ -14,7 +14,7 @@ public class Solution {
         }
 
         int n = kthGrammar(N - 1, (K + 1) / 2);
-        if ((K & 1) == 1) {
+        if ((K & 1) == 0) {
             return 1 - n;
         } else {
             return n;
