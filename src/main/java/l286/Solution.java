@@ -20,27 +20,23 @@ public class Solution {
                 }
             }
         }
-        queue.add(null);
 
         int step = 0;
         while (!queue.isEmpty()) {
-            int[] point = queue.remove();
-            if (point == null) {
-                step++;
+            int size = queue.size();
 
-                if (!queue.isEmpty()) {
-                    queue.add(null);
+            for (int i = 0; i < size; i++) {
+                int[] point = queue.remove();
+                if (step < rooms[point[0]][point[1]]) {
+                    rooms[point[0]][point[1]] = step;
                 }
-                continue;
+                addQueue(queue, rooms, point[0] - 1, point[1]);
+                addQueue(queue, rooms, point[0] + 1, point[1]);
+                addQueue(queue, rooms, point[0], point[1] - 1);
+                addQueue(queue, rooms, point[0], point[1] + 1);
             }
 
-            if (step < rooms[point[0]][point[1]]) {
-                rooms[point[0]][point[1]] = step;
-            }
-            addQueue(queue, rooms, point[0] - 1, point[1]);
-            addQueue(queue, rooms, point[0] + 1, point[1]);
-            addQueue(queue, rooms, point[0], point[1] - 1);
-            addQueue(queue, rooms, point[0], point[1] + 1);
+            step++;
         }
     }
 
