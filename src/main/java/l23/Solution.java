@@ -14,10 +14,6 @@ import java.util.PriorityQueue;
 public class Solution {
 
     public ListNode mergeKLists(ListNode[] lists) {
-        if (lists.length == 0) {
-            return null;
-        }
-
         PriorityQueue<ListNode> queue = new PriorityQueue<>(new Comparator<ListNode>() {
             @Override
             public int compare(ListNode o1, ListNode o2) {
@@ -30,26 +26,22 @@ public class Solution {
             }
         }
 
-        ListNode head = null;
-        ListNode tail = null;
+        ListNode dummy = new ListNode(0);
+        ListNode tail = dummy;
         while (!queue.isEmpty()) {
             ListNode node = queue.remove();
-            if (head == null) {
-                head = node;
-                tail = node;
-            } else {
-                tail.next = node;
-                tail = node;
-            }
+            ListNode next = node.next;
 
-            if (node.next != null) {
-                queue.add(node.next);
+            tail.next = node;
+            node.next = null;
+            tail = node;
+
+            if (next != null) {
+                queue.add(next);
             }
         }
 
-        if (tail != null) {
-            tail.next = null;
-        }
-        return head;
+        tail.next = null;
+        return dummy.next;
     }
 }
