@@ -9,14 +9,18 @@ package l852;
 public class Solution {
 
     public int peakIndexInMountainArray(int[] A) {
-        int res = 0;
+        int left = 0;
+        int right = A.length - 1;
 
-        for (int i = 1; i < A.length; i++) {
-            if (A[i] > A[i - 1]) {
-                res = i;
+        while (left < right) {
+            int mid = left + ((right - left) >> 1);
+
+            if (A[mid] < A[mid + 1]) {
+                left = mid + 1;
+            } else {
+                right = mid;
             }
         }
-
-        return res;
+        return left;
     }
 }
