@@ -21,33 +21,43 @@ public class Solution {
             list.add(time);
         }
 
-        int[] nodes = new int[N];
-        Arrays.fill(nodes, Integer.MAX_VALUE);
-        dfs(nodes, K, 1, edges);
-
+        boolean[] visit = new boolean[N];
+        Queue<int[]> queue = new PriorityQueue<>(new Comparator<int[]>() {
+            @Override
+            public int compare(int[] o1, int[] o2) {
+                return o1[1] - o2[1];
+            }
+        });
+        queue.add(new int[]{K, 0});
         int res = 0;
-        for (int i = 0; i < nodes.length; i++) {
-            if (nodes[i] == Integer.MAX_VALUE) {
+        while (!queue.isEmpty()) {
+            int[] item = queue.remove();
+            if (visit[item[0] - 1]) {
+                continue;
+            }
+            visit[item[0] - 1] = true;
+            res = item[1];
+
+            List<int[]> edge = edges[item[0] - 1];
+            if (edge != null) {
+                for (int[] e : edge) {
+                    queue.add(new int[]{e[1], item[1] + e[2]});
+                }
+            }
+        }
+
+        for (int i = 0; i < visit.length; i++) {
+            if (!visit[i]) {
                 return -1;
             }
-            res = Math.max(res, nodes[i]);
         }
-        return res - 1;
+        return res;
     }
 
-    private void dfs(int[] nodes, int n, int time, List<int[]>[] edges) {
-        if (nodes[n - 1] <= time) {
-            return;
-        }
-
-        nodes[n - 1] = time;
-        List<int[]> edge = edges[n - 1];
-        if (edge == null) {
-            return;
-        }
-
-        for (int[] e : edge) {
-            dfs(nodes, e[1], time + e[2], edges);
-        }
+    public static void main(String[] args) {
+        new Solution().networkDelayTime(new int[][]{
+                new int[]{1, 2, 1},
+                new int[]{2, 1, 3}
+        }, 2, 2);
     }
 }
