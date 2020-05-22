@@ -2,6 +2,9 @@ package l105;
 
 import shared.TreeNode;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Solution
  *
@@ -11,33 +14,27 @@ import shared.TreeNode;
 public class Solution {
 
     public TreeNode buildTree(int[] preorder, int[] inorder) {
-        return build(preorder, inorder, 0, preorder.length, 0, inorder.length);
+        Map<Integer, Integer> indexMap = new HashMap<>();
+        for (int i = 0; i < inorder.length; i++) {
+            indexMap.put(inorder[i], i);
+        }
+
+        return build(preorder, inorder, 0, preorder.length, 0, inorder.length, indexMap);
     }
 
-    private TreeNode build(int[] preorder, int[] inorder, int l1, int r1, int l2, int r2) {
+    private TreeNode build(int[] preorder, int[] inorder, int l1, int r1, int l2, int r2, Map<Integer, Integer> indexMap) {
         if (l1 >= r1 || l2 >= r2) {
             return null;
         }
 
         TreeNode root = new TreeNode(preorder[l1]);
 
-        int index = index(inorder, l2, r2, root.val);
+        int index = indexMap.get(root.val);
         int leftSize = index - l2;
-        int rightSize = r2 - index;
 
-        root.left = build(preorder, inorder, l1 + 1, l1 + 1 + leftSize, l2, l2 + leftSize);
-        root.right = build(preorder, inorder, l1 + 1 + leftSize, r1, l2 + leftSize + 1, r2);
+        root.left = build(preorder, inorder, l1 + 1, l1 + 1 + leftSize, l2, l2 + leftSize, indexMap);
+        root.right = build(preorder, inorder, l1 + 1 + leftSize, r1, l2 + leftSize + 1, r2, indexMap);
 
         return root;
-    }
-
-    private int index(int[] arr, int l, int r, int target) {
-        for (int i = l; i < r; i++) {
-            if (arr[i] == target) {
-                return i;
-            }
-        }
-
-        return -1;
     }
 }
