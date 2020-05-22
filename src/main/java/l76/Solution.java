@@ -12,72 +12,63 @@ import java.util.Map;
 public class Solution {
 
     public String minWindow(String s, String t) {
-        Map<Character, Integer> tmap = new HashMap<>();
-        for (int i = 0; i < t.length(); i++) {
-            tmap.compute(t.charAt(i), (k, v) -> {
-                if (v == null) {
-                    v = 0;
-                }
-                return ++v;
-            });
+        if (s.length() < t.length()) {
+            return "";
         }
 
-        String res = "";
+        Map<Character, Integer> tCount = new HashMap<>();
+        Map<Character, Integer> sCount = new HashMap<>();
+        for (int i = 0; i < t.length(); i++) {
+            compute(tCount, t.charAt(i), 1);
+        }
 
-        Map<Character, Integer> map = new HashMap<>();
-
+        int distance = tCount.size();
+        int minSize = Integer.MAX_VALUE;
+        int resLeft = 0;
+        int resRight = s.length();
         int left = 0;
         int right = 0;
         while (right < s.length()) {
-            char ch = s.charAt(right);
-            if (tmap.containsKey(ch)) {
-                map.compute(ch, (k, v) -> {
-                    if (v == null) {
-                        v = 0;
-                    }
-                    return ++v;
-                });
+            if (tCount.containsKey(s.charAt(right))) {
+                if (compute(sCount, s.charAt(right), 1) == tCount.get(s.charAt(right))) {
+                    distance--;
+                }
             }
 
-            while (mapEq(map, tmap)) {
-                if (res.equals("") || right - left + 1 < res.length()) {
-                    res = s.substring(left, right + 1);
+            while (distance == 0) {
+                if (right - left < minSize) {
+                    resLeft = left;
+                    resRight = right;
+                    minSize = right - left;
                 }
-
-                if (tmap.containsKey(s.charAt(left))) {
-                    int count = map.compute(s.charAt(left), (k, v) -> {
-                        return --v;
-                    });
-                    if (count == 0) {
-                        map.remove(s.charAt(left));
+                if (tCount.containsKey(s.charAt(left))) {
+                    if (compute(sCount, s.charAt(left), -1) < tCount.get(s.charAt(left))) {
+                        distance++;
                     }
                 }
                 left++;
             }
-
             right++;
         }
 
-        return res;
+        if (minSize > s.length()) {
+            return "";
+        }
+
+        return s.substring(resLeft, resRight + 1);
     }
 
-    private boolean mapEq(Map<Character, Integer> m1, Map<Character, Integer> m2) {
-        if (m1.size() != m2.size()) {
-            return false;
-        }
-
-        for (Map.Entry<Character, Integer> entry : m1.entrySet()) {
-            if (!m2.containsKey(entry.getKey())) {
-                return false;
+    private int compute(Map<Character, Integer> map, char key, int delta) {
+        return map.compute(key, (k, v) -> {
+            if (v == null) {
+                v = 0;
             }
-            if (entry.getValue().compareTo(m2.get(entry.getKey())) < 0) {
-                return false;
-            }
-        }
-        return true;
+            v += delta;
+            return v;
+        });
     }
 
     public static void main(String[] args) {
-        new Solution().minWindow("ADOBECODEBANC", "ABC");
+        new Solution().minWindow("aab", "aab");
     }
 }
