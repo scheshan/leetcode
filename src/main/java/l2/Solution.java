@@ -10,53 +10,48 @@ import shared.ListNode;
  */
 public class Solution {
 
-    private boolean b;
+    private ListNode head = new ListNode(0);
 
-    private ListNode head;
+    private ListNode tail = head;
 
-    private ListNode tail;
+    private boolean flag = false;
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         while (l1 != null && l2 != null) {
-            newNode(l1.val + l2.val);
+            addNode(l1, l1.val + l2.val);
             l1 = l1.next;
             l2 = l2.next;
         }
 
         while (l1 != null) {
-            newNode(l1.val);
+            addNode(l1, l1.val);
             l1 = l1.next;
         }
         while (l2 != null) {
-            newNode(l2.val);
+            addNode(l2, l2.val);
             l2 = l2.next;
         }
 
-        if (b) {
-            newNode(0);
+        if (flag) {
+            addNode(new ListNode(0), 0);
         }
 
-        return head;
+        return head.next;
     }
 
-    private void newNode(int v) {
-        if (b) {
+    private void addNode(ListNode node, int v) {
+        if (flag) {
             v++;
         }
+
+        flag = false;
         if (v >= 10) {
-            b = true;
-            v = v - 10;
-        } else {
-            b = false;
+            v -= 10;
+            flag = true;
         }
 
-        ListNode node = new ListNode(v);
-        if (head == null) {
-            head = node;
-            tail = node;
-        } else {
-            tail.next = node;
-            tail = node;
-        }
+        node.val = v;
+        tail.next = node;
+        tail = node;
     }
 }
