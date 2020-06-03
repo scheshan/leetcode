@@ -25,7 +25,7 @@ public class Solution {
 
         int[] result = new int[nums.length];
         for (int i = 0; i < nums.length; i++) {
-            result[i] = prefix[i - 1] * suffix[i + 1];
+            result[i] = prefix[i] * suffix[i + 1];
         }
 
         return result;
