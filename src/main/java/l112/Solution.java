@@ -10,26 +10,20 @@ import shared.TreeNode;
  */
 public class Solution {
 
-    private boolean result;
-
     public boolean hasPathSum(TreeNode root, int sum) {
-        travel(root, sum, 0);
-
-        return result;
+        return travel(root, sum);
     }
 
-    private void travel(TreeNode node, int sum, int cur) {
-        if (node == null || result) {
-            return;
+    private boolean travel(TreeNode node, int sum) {
+        if (node == null) {
+            return false;
         }
 
-        cur += node.val;
-        if (sum == cur && node.left == null && node.right == null) {
-            result = true;
-            return;
+        sum -= node.val;
+        if (sum == 0 && node.left == null && node.right == null) {
+            return true;
         }
 
-        travel(node.left, sum, cur);
-        travel(node.right, sum, cur);
+        return travel(node.left, sum) || travel(node.right, sum);
     }
 }
