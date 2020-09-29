@@ -21,73 +21,65 @@ class Trie {
      * Inserts a word into the trie.
      */
     public void insert(String word) {
-        insert(root, word, 0);
-    }
+        Node node = root;
+        for (int i = 0; i < word.length(); i++) {
+            if (node.children == null) {
+                node.children = new Node[26];
+            }
 
-    private void insert(Node node, String word, int i) {
-        int ind = word.charAt(i) - 'a';
-        if (node.children[ind] == null) {
-            node.children[ind] = new Node();
+            int ind = word.charAt(i) - 'a';
+            if (node.children[ind] == null) {
+                node.children[ind] = new Node();
+            }
+            node = node.children[ind];
         }
-        if (i == word.length() - 1) {
-            node.children[ind].end = true;
-        } else {
-            insert(node.children[ind], word, i + 1);
-        }
+        node.end = true;
     }
 
     /**
      * Returns if the word is in the trie.
      */
     public boolean search(String word) {
-        Node node = find(root, word, 0);
-        return node != null && node.end;
-    }
-
-    private Node find(Node node, String word, int i) {
-        if (node == null) {
-            return null;
+        Node node = root;
+        for (int i = 0; i < word.length(); i++) {
+            int ind = word.charAt(i) - 'a';
+            if (node.children == null || node.children[ind] == null) {
+                return false;
+            }
+            node = node.children[ind];
         }
-
-        int ind = word.charAt(i) - 'a';
-        if (node.children[ind] == null) {
-            return null;
-        }
-
-        Node child = node.children[ind];
-        if (i == word.length() - 1) {
-            return child;
-        }
-
-        return find(child, word, i + 1);
+        return node.end;
     }
 
     /**
      * Returns if there is any word in the trie that starts with the given prefix.
      */
     public boolean startsWith(String prefix) {
-        Node node = find(root, prefix, 0);
-        return node != null;
+        Node node = root;
+        for (int i = 0; i < prefix.length(); i++) {
+            int ind = prefix.charAt(i) - 'a';
+            if (node.children == null || node.children[ind] == null) {
+                return false;
+            }
+        }
+        return true;
     }
 
-    class Node {
+    private class Node {
 
-        private Node[] children;
+        Node[] children;
 
         private boolean end;
 
         public Node() {
-            children = new Node[26];
+
         }
     }
 
     public static void main(String[] args) {
         Trie trie = new Trie();
         trie.insert("apple");
-        trie.search("apple");
-        trie.search("app");
-        trie.startsWith("app");
-        trie.insert("app");
-        trie.search("app");
+        final boolean res = trie.search("apple");
+        System.out.println(res);
     }
 }
