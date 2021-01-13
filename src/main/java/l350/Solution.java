@@ -11,35 +11,31 @@ import java.util.*;
 public class Solution {
 
     public int[] intersect(int[] nums1, int[] nums2) {
-        Map<Integer, Integer> m1 = new HashMap();
-        for (int num : nums1) {
-            m1.compute(num, (k, v) -> {
-                if (v == null) {
-                    v = 0;
-                }
-                return ++v;
-            });
-        }
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
 
-        ArrayList<Integer> list = new ArrayList<>();
-        for (int num : nums2) {
-            if (m1.containsKey(num)) {
-                int value = m1.get(num);
-                value--;
-                if (value == 0) {
-                    m1.remove(num);
-                } else {
-                    m1.put(num, value);
-                }
-                list.add(num);
+        int[] arr = new int[Math.min(nums1.length, nums2.length)];
+        int ind = 0;
+        int l = 0;
+        int r = 0;
+
+        while (l < nums1.length && r < nums2.length) {
+            if (nums1[l] == nums2[r]) {
+                arr[ind++] = nums1[l];
+                l++;
+                r++;
+            } else if (nums1[l] < nums2[r]) {
+                l++;
+            } else {
+                r++;
             }
         }
 
-        int[] result = new int[list.size()];
-        for (int i = 0; i < list.size(); i++) {
-            result[i] = list.get(i);
+        int[] res = new int[ind];
+        for (int i = 0; i < res.length; i++) {
+            res[i] = arr[i];
         }
 
-        return result;
+        return res;
     }
 }
