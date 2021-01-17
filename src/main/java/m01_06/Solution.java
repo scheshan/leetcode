@@ -9,29 +9,20 @@ package m01_06;
 public class Solution {
 
     public String compressString(String S) {
-        if (S == null || S.length() == 0) {
-            return S;
-        }
-
         StringBuilder sb = new StringBuilder();
-        char prev = S.charAt(0);
-        int count = 1;
 
-        for (int i = 1; i < S.length(); i++) {
-            char ch = S.charAt(i);
-            if (ch == prev) {
-                count++;
-            } else {
-                sb.append(prev);
-                sb.append(count);
-
-                prev = ch;
-                count = 1;
+        int slow = 0;
+        while(slow < S.length()) {
+            int fast = slow + 1;
+            while(fast < S.length() && S.charAt(fast) == S.charAt(slow)) {
+                fast++;
             }
-        }
 
-        sb.append(prev);
-        sb.append(count);
+            sb.append(S.charAt(slow));
+            sb.append(fast - slow);
+
+            slow = fast;
+        }
 
         return sb.length() >= S.length() ? S : sb.toString();
     }
