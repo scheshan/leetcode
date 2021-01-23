@@ -9,24 +9,17 @@ package l674;
 public class Solution {
 
     public int findLengthOfLCIS(int[] nums) {
-        if (nums.length == 0) {
-            return 0;
-        }
+        int res = 0;
 
-        int res = 1;
-        int cur = 1;
-
-        for (int i = 0; i < nums.length; i++) {
-            if (i == 0) {
-                cur = 1;
-            } else {
-                if (nums[i] > nums[i - 1]) {
-                    cur++;
-                    res = Math.max(res, cur);
-                } else {
-                    cur = 1;
-                }
+        int slow = 0;
+        while (slow < nums.length) {
+            int fast = slow + 1;
+            while (fast < nums.length && nums[fast] > nums[fast - 1]) {
+                fast++;
             }
+
+            res = Math.max(res, fast - slow);
+            slow = fast;
         }
 
         return res;
