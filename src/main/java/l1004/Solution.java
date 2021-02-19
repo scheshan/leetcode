@@ -9,39 +9,28 @@ package l1004;
 public class Solution {
 
     public int longestOnes(int[] A, int K) {
-        int result = 0;
-
-        int zero = 0;
-        int count = 0;
+        int res = 0;
 
         int left = 0;
         int right = 0;
+        int count = 0;
 
         while (right < A.length) {
-            int num = A[right];
-            if (num == 1) {
+            if (A[right] == 0) {
                 count++;
-                result = Math.max(count, result);
-                right++;
-            } else {
-                if (zero < K) {
-                    count++;
-                    zero++;
-                    result = Math.max(count, result);
-                    right++;
-                } else {
-                    while (zero >= K) {
-                        if (A[left] == 0) {
-                            zero--;
-                        }
-                        count--;
-                        left++;
-                    }
+            }
+
+            while (count > K) {
+                if (A[left++] == 0) {
+                    count--;
                 }
             }
+
+            res = Math.max(res, right - left + 1);
+            right++;
         }
 
-        return result;
+        return res;
     }
 
     public static void main(String[] args) {
