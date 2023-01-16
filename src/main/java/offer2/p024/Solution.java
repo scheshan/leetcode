@@ -1,4 +1,4 @@
-package offer2.p24;
+package offer2.p024;
 
 import common.ListNode;
 
