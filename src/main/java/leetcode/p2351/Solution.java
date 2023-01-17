@@ -1,4 +1,4 @@
-package leetcode.p2531;
+package leetcode.p2351;
 
 /**
  * Solution
