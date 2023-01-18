@@ -12,15 +12,13 @@ public class Solution {
         int res = 0;
         for (int row = 0; row < grid.length; row++) {
             for (int col = 0; col < grid[row].length; col++) {
-                int left = 0;
-                if (col > 0) {
-                    left = grid[row][col - 1];
+                if (row > 0 && col > 0) {
+                    grid[row][col] += Math.max(grid[row - 1][col], grid[row][col - 1]);
+                } else if (row > 0) {
+                    grid[row][col] += grid[row - 1][col];
+                } else if (col > 0) {
+                    grid[row][col] += grid[row][col - 1];
                 }
-                int top = 0;
-                if (row > 0) {
-                    top = grid[row - 1][col];
-                }
-                grid[row][col] += Math.max(left, top);
                 res = grid[row][col];
             }
         }
