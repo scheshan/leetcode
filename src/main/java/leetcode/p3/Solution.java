@@ -16,27 +16,15 @@ public class Solution {
 
         int res = 0;
 
-        int l = 0;
-        int r = 0;
-        while (r < s.length()) {
-            map.compute(s.charAt(r++), (k, v) -> {
-                if (v == null) {
-                    v = 0;
-                }
-                return ++v;
-            });
-
-            while (map.size() < r - l) {
-                char ch = s.charAt(l++);
-                int count = map.get(ch);
-                if (count == 1) {
-                    map.remove(ch);
-                } else {
-                    map.put(ch, count - 1);
+        int left = 0;
+        for (int i = 0; i < s.length(); i++) {
+            if (map.containsKey(s.charAt(i))) {
+                if (left < map.get(s.charAt(i)) + 1) {
+                    left = map.get(s.charAt(i)) + 1;
                 }
             }
-
-            res = Math.max(res, r - l);
+            res = Math.max(res, i - left + 1);
+            map.put(s.charAt(i), i);
         }
 
         return res;
