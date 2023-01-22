@@ -9,11 +9,7 @@ package leetcode.p35;
 public class Solution {
 
     public int searchInsert(int[] nums, int target) {
-        if (nums[nums.length - 1] < target) {
-            return nums.length;
-        }
-
-        int res = 0;
+        int res = nums.length;
         int l = 0;
         int r = nums.length;
         while (l < r) {
