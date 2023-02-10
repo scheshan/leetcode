@@ -38,8 +38,4 @@ public class Solution {
         }
         return res;
     }
-
-    public static void main(String[] args) {
-        new Solution().nextGreaterElements(new int[]{5, 4, 3, 2, 1});
-    }
 }

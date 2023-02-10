@@ -28,8 +28,4 @@ public class Solution {
         node.right = build(preorder, mid, r);
         return node;
     }
-
-    public static void main(String[] args) {
-        new Solution().bstFromPreorder(new int[]{4, 2});
-    }
 }

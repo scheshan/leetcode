@@ -60,16 +60,4 @@ public class Solution {
 
         return root;
     }
-
-    public void test() {
-        Node root = new Node(1);
-        root.left = new Node(2, new Node(4), new Node(5), null);
-        root.right = new Node(3, new Node(6), new Node(7), null);
-
-        this.connect(root);
-    }
-
-    public static void main(String[] args) {
-        new Solution().test();
-    }
 }

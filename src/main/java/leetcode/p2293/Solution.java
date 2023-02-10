@@ -30,8 +30,4 @@ public class Solution {
         }
         return Math.max(n1, n2);
     }
-
-    public static void main(String[] args) {
-        new Solution().minMaxGame(new int[]{1, 3, 5, 2, 4, 8, 2, 2});
-    }
 }

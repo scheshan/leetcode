@@ -66,15 +66,4 @@ public class AuthenticationManager {
             queue.remove();
         }
     }
-
-    public static void main(String[] args) {
-        AuthenticationManager manager = new AuthenticationManager(5);
-        manager.renew("aaa", 1);
-        manager.generate("aaa", 2);
-        System.out.println(manager.countUnexpiredTokens(6));
-        manager.generate("bbb", 7);
-        manager.renew("aaa", 8);
-        manager.renew("bbb", 10);
-        System.out.println(manager.countUnexpiredTokens(15));
-    }
 }

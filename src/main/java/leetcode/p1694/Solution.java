@@ -54,8 +54,4 @@ public class Solution {
         }
         return ind;
     }
-
-    public static void main(String[] args) {
-        new Solution().reformatNumber("1-23-45 6");
-    }
 }

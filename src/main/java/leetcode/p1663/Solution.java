@@ -22,8 +22,4 @@ public class Solution {
         }
         return new String(arr);
     }
-
-    public static void main(String[] args) {
-        new Solution().getSmallestString(5, 73);
-    }
 }

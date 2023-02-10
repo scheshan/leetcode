@@ -44,8 +44,4 @@ public class Solution {
         }
         return res;
     }
-
-    public static void main(String[] args) {
-        new Solution().timeRequiredToBuy(new int[]{5, 1, 1, 1}, 0);
-    }
 }

@@ -27,8 +27,4 @@ public class Solution {
 
         return valid(nums, l, mid, min, nums[r]) && valid(nums, mid + 1, r - 1, nums[r], max);
     }
-
-    public static void main(String[] args) {
-        new Solution().verifyPostorder(new int[]{5, 4, 3, 2, 1});
-    }
 }

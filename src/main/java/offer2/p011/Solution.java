@@ -30,8 +30,4 @@ public class Solution {
         }
         return res;
     }
-
-    public static void main(String[] args) {
-        new Solution().findMaxLength(new int[]{0,1,0});
-    }
 }

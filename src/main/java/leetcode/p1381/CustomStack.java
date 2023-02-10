@@ -33,11 +33,4 @@ public class CustomStack {
             arr[i] += val;
         }
     }
-
-    public static void main(String[] args) {
-        CustomStack stack = new CustomStack(3);
-        stack.push(1);
-        stack.push(2);
-        System.out.println(stack.pop());
-    }
 }

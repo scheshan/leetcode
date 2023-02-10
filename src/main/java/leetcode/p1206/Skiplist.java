@@ -89,14 +89,4 @@ public class Skiplist {
         }
         return res;
     }
-
-    public static void main(String[] args) {
-        Skiplist sl = new Skiplist();
-        sl.add(0);
-        sl.add(5);
-        sl.add(2);
-        sl.add(1);
-        System.out.println(sl.search(0));
-        System.out.println(sl.erase(5));
-    }
 }

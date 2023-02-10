@@ -49,20 +49,4 @@ public class Solution {
         }
         lists[left] = dummy.next;
     }
-
-    public static void main(String[] args) {
-        ListNode[] arr = new ListNode[4];
-        arr[0] = new ListNode(1);
-        arr[0].next = new ListNode(4);
-        arr[0].next.next = new ListNode(5);
-        arr[1] = new ListNode(1);
-        arr[1].next = new ListNode(3);
-        arr[1].next.next = new ListNode(4);
-        arr[2] = new ListNode(2);
-        arr[2].next = new ListNode(6);
-        arr[3] = new ListNode(2);
-        arr[3].next = new ListNode(6);
-
-        new Solution().mergeKLists(arr);
-    }
 }

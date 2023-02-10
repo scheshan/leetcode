@@ -21,8 +21,4 @@ public class Solution {
         }
         return false;
     }
-
-    public static void main(String[] args) {
-        new Solution().canJump(new int[]{3, 2, 1, 0, 4});
-    }
 }

@@ -66,9 +66,4 @@ class TreeBuilder {
 
         return deque.remove();
     }
-
-    public static void main(String[] args) {
-        Node node = new TreeBuilder().buildTree(new String[]{"3", "4", "+", "2", "*", "7", "/"});
-        System.out.println(node.evaluate());
-    }
 }

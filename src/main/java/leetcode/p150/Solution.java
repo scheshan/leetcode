@@ -38,8 +38,4 @@ public class Solution {
         }
         return deque.removeLast();
     }
-
-    public static void main(String[] args) {
-        new Solution().evalRPN(new String[]{"2", "1", "+", "3", "*"});
-    }
 }

@@ -37,11 +37,4 @@ public class Solution {
 
         return slow;
     }
-
-    public static void main(String[] args) {
-        ListNode head = new ListNode(1);
-        head.next = new ListNode(2);
-
-        new Solution().detectCycle(head);
-    }
 }

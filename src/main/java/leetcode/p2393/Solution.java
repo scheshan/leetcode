@@ -26,8 +26,4 @@ public class Solution {
 
         return res;
     }
-
-    public static void main(String[] args) {
-        new Solution().countSubarrays(new int[]{1, 3, 5, 4, 4, 6});
-    }
 }

@@ -28,8 +28,4 @@ public class Solution {
 
         return cur;
     }
-
-    public static void main(String[] args) {
-        new Solution().translateNum(220);
-    }
 }

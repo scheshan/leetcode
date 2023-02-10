@@ -23,8 +23,4 @@ public class Solution {
         }
         return res;
     }
-
-    public static void main(String[] args) {
-        new Solution().wateringPlants(new int[]{2, 2, 3, 3}, 5);
-    }
 }

@@ -44,9 +44,4 @@ public class Solution {
         }
         return res;
     }
-
-    public static void main(String[] args) {
-        ListNode head = new ListNode(9);
-        new Solution().plusOne(head);
-    }
 }

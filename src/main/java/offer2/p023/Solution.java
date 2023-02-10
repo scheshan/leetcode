@@ -29,15 +29,4 @@ public class Solution {
 
         return l1;
     }
-
-    public static void main(String[] args) {
-        ListNode headA = new ListNode(1);
-        headA.next = new ListNode(2);
-        headA.next.next = new ListNode(3);
-
-        ListNode headB = new ListNode(4);
-        headB.next = headA;
-
-        new Solution().getIntersectionNode(headA, headB);
-    }
 }

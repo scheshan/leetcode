@@ -25,8 +25,4 @@ public class Solution {
 
         return state[n];
     }
-
-    public static void main(String[] args) {
-        new Solution().numTrees(2);
-    }
 }

@@ -37,12 +37,4 @@ public class Solution {
 
         return tree;
     }
-
-    public static void main(String[] args) {
-        ListNode head = new ListNode(1);
-        head.next = new ListNode(2);
-        head.next.next = new ListNode(3);
-
-        new Solution().sortedListToBST(head);
-    }
 }
