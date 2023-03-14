@@ -39,8 +39,4 @@ public class Solution {
 
         return res;
     }
-
-    public static void main(String[] args) {
-        new Solution().findNumberOfLIS(new int[]{1, 2, 4, 3, 5, 4, 7, 2});
-    }
 }

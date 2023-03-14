@@ -33,8 +33,4 @@ public class Solution {
         }
         return Math.min(r1, r2);
     }
-
-    public static void main(String[] args) {
-        new Solution().movesToMakeZigzag(new int[]{9, 6, 1, 6, 2});
-    }
 }

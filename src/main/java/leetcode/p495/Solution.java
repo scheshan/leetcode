@@ -27,9 +27,5 @@ public class Solution {
 
         return res;
     }
-
-    public static void main(String[] args) {
-        new Solution().findPoisonedDuration(new int[]{1, 4}, 2);
-    }
 }
 
