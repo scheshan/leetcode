@@ -1,0 +1,37 @@
+package leetcode.p318;
+
+/**
+ * Solution
+ *
+ * @author heshan
+ * @date 2023/11/6
+ */
+public class Solution {
+
+    public int maxProduct(String[] words) {
+        int[] map = new int[words.length];
+        for (int i = 0; i < words.length; i++) {
+            int n = 0;
+            for (int j = 0; j < words[i].length(); j++) {
+                n |= 1 << (words[i].charAt(j) - 'a');
+            }
+
+            map[i] = n;
+        }
+
+        int res = 0;
+
+        for (int i = 0; i < words.length; i++) {
+            for (int j = i + 1; j < words.length; j++) {
+                String s1 = words[i];
+                String s2 = words[j];
+
+                if ((map[i] & map[j]) == 0) {
+                    res = Math.max(res, s1.length() * s2.length());
+                }
+            }
+        }
+
+        return res;
+    }
+}
