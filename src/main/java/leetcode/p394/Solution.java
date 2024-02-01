@@ -60,8 +60,4 @@ public class Solution {
 
         return sb.toString();
     }
-
-    public static void main(String[] args) {
-        new Solution().decodeString("3[a2[c]]");
-    }
 }
